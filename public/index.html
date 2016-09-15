@@ -7,10 +7,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-route.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-	<script src="/js/app.js"></script>
+	<script src="js/app.js"></script>
 </head>
 
 <body ng-controller="appController" ng-init="init()">
@@ -37,7 +36,7 @@
 					</label>
 				</div>
 
-				<button class="btn btn-primary" ng-click="clickNewEntry">Submit</button>
+				<button class="btn btn-primary" ng-click="clickNewEntry()">Submit</button>
 
 				<p ng-show="daysAlive">
 					You are {{ daysAlive }} days old.
@@ -56,8 +55,8 @@
 						<th>Days Alive</th>
 					</thead>
 					<tbody>
-						<tr ng-repeat="entry in entries">
-							<td ng-bind="entry.timestamp"></td>
+						<tr ng-repeat="entry in entries track by $index">
+							<td ng-bind="entry.createDate"></td>
 							<td ng-bind="entry.fullName"></td>
 							<td ng-bind="entry.dob"></td>
 							<td ng-bind="daysSinceDate(entry.daysAlive)"></td>
