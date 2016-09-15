@@ -1,0 +1,41 @@
+---
+- hosts: webservers
+  user: vagrant
+  vars:
+    node_version: v5.12.0
+    source_directory: /vagrant
+  tasks:
+    -   name: Setup keys for mongodb community edition
+        shell: apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
+        become: true
+
+    -   name: Setup node repository
+        shell: curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -
+        become: true
+
+    -   name: Add apt source
+        shell: echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+        become: true
+
+    -   name: Install system dependencies
+        become: true
+        apt: name={{ item }} update_cache=yes state=installed
+        with_items:
+            - build-essential
+            - git
+            - mongodb-org
+            - nodejs
+
+    -   name: Install global node modules
+        npm: name={{item}} global=yes
+        become: true
+        with_items:
+            - gulp-cli
+
+    -   name: Install npm modules
+        npm: path="/vagrant"
+
+    -   name: Start mongodb
+        shell: service mongod start
+        become: true
+...
