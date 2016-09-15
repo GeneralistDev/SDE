@@ -23,8 +23,15 @@
 
 				<div class="form-group">
 					<label>
-						Full name:
-						<input ng-model="fullName" type="text" class="form-control" />
+						First name:
+						<input ng-model="firstName" type="text" class="form-control" />
+					</label>
+				</div>
+
+				<div class="form-group">
+					<label>
+						Last name:
+						<input ng-model="lastName" type="text" class="form-control" />
 					</label>
 				</div>
 
@@ -39,6 +46,10 @@
 
 				<p ng-show="daysAlive">
 					You are {{ daysAlive }} days old.
+				</p>
+
+				<p ng-show="martianDays">
+					You are {{ martianDays }} martian days old.
 				</p>
 
 			</div>
@@ -56,9 +67,9 @@
 					<tbody>
 						<tr ng-repeat="entry in history">
 							<td ng-bind="entry.timestamp"></td>
-							<td ng-bind="entry.fullName"></td>
+							<td>{{ firstName }} {{ lastName }}</td>
 							<td ng-bind="entry.dob"></td>
-							<td ng-bind="entry.daysAlive"></td>
+							<td ng-bind="getDaysSinceDate(entry.daysAlive)"></td>
 						</tr>
 					</tbody>
 				</table>

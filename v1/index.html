@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html data-ng-app="app">
+
+<head>
+	<title>Template that uses Bootstrap</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link href="css/bootstrap.min.css" rel="stylesheet" />
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/angular.min.js"></script>
+</head>
+
+<body ng-controller="appController" ng-init="init()">
+	<div class="container">
+		<div class="jumbotron">
+			<h1>How many days have I been alive?</h1>
+		</div>
+		<div class="row">
+
+			<div class="col-xs-12 col-sm-4">
+				<h2>Submit</h2>
+
+				<div class="form-group">
+					<label>
+						Full name:
+						<input ng-model="fullName" type="text" class="form-control" />
+					</label>
+				</div>
+
+				<div class="form-group">
+					<label>
+						Date Of Birth:
+						<input ng-model="dob" type="date" class="form-control" />
+					</label>
+				</div>
+
+				<button class="btn btn-primary" ng-click="calculate()">Go!</button>
+
+				<p ng-show="daysAlive">
+					You are {{ daysAlive }} days old.
+				</p>
+
+			</div>
+
+			<div class="col-xs-12 col-sm-8">
+				<h2>History</h2>
+
+				<table class="table">
+					<thead>
+						<th>Timestamp</th>
+						<th>Full Name</th>
+						<th>DOB</th>
+						<th>Days Alive</th>
+					</thead>
+					<tbody>
+						<tr ng-repeat="entry in history">
+							<td ng-bind="entry.timestamp"></td>
+							<td ng-bind="entry.fullName"></td>
+							<td ng-bind="entry.dob"></td>
+							<td ng-bind="getDaysSinceDate(entry.daysAlive)"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<script src="js/app.js"></script>
+</body>
+
+</html>
