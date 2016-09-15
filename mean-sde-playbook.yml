@@ -1,0 +1,75 @@
+---
+- hosts: webservers
+  user: vagrant
+  vars:
+    node_version: v5.12.0
+    source_directory: /vagrant
+    mongodb_user: root
+    mongodb_password: sdepassword
+    mongodb_database: sdeproject
+  tasks:
+    -   name: Setup keys for mongodb community edition
+        shell: apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
+        become: true
+
+    -   name: Setup node repository
+        shell: curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+        become: true
+
+    -   name: Add apt source
+        shell: echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+        become: true
+
+    -   name: Install system dependencies
+        become: true
+        apt: name={{ item }} update_cache=yes state=installed
+        with_items:
+            - build-essential
+            - libssl-dev
+            - git
+            - mongodb-org
+            - python2.7
+            - nodejs
+
+    -   name: Download pip
+        get_url: 
+            url: https://bootstrap.pypa.io/get-pip.py
+            dest: ~/
+
+    -   name: Install pip
+        shell: cd /home/vagrant && python get-pip.py
+        become: true
+        args:
+            executable: /bin/bash
+
+    -   name: Install pyMongo
+        shell: pip install pymongo
+        become: true
+        args:
+            executable: /bin/bash
+
+    -   name: Clean npm cache
+        shell: npm cache clean
+        become: true
+
+    -   name: Install npm modules
+        npm: path="/vagrant"
+
+    -   name: Setup mongodb user
+        mongodb_user: "database=admin name={{mongodb_user}} password={{mongodb_password}} roles='root,dbAdmin,readWriteAnyDatabase' state=present"
+        
+    -   name: Setup database user
+        mongodb_user: 
+            login_user: "{{mongodb_user}}"
+            login_password: "{{mongodb_password}}"
+            login_database: admin
+            database: "{{mongodb_database}}"
+            user: "{{mongodb_user}}"
+            password: "{{mongodb_password}}"
+            state: present
+            roles:
+                - { db: "{{mongodb_database}}", role: "readWrite"}
+
+    -   name: Mongo url
+        shell: 'echo "export MONGODB_URI=mongodb://{{mongodb_user}}:{{mongodb_password}}@127.0.0.1:27017/{{mongodb_database}}" >> ~/.bashrc'
+...
