@@ -52,10 +52,10 @@
 					</thead>
 					<tbody>
 						<tr ng-repeat="entry in entries track by $index">
-							<td ng-bind="entry.createDate"></td>
+							<td ng-bind="entry.createDate | amDateFormat : 'ddd, MMM Do YYYY, h:mm:ss a'"></td>
 							<td ng-bind="entry.fullName"></td>
-							<td ng-bind="entry.dob"></td>
-							<td>{{today | amDifference : entry.dob : 'days'}}</td>
+							<td ng-bind="entry.dob | amDateFormat : 'ddd, MMM Do YYYY'"></td>
+							<td ng-bind="today | amDifference : entry.dob : 'days'"></td>
 						</tr>
 					</tbody>
 				</table>
