@@ -7,6 +7,8 @@
     mongodb_user: root
     mongodb_password: sdepassword
     mongodb_database: sdeproject
+    mongodb_host: 127.0.0.1
+    mongodb_port: 27017
   tasks:
     -   name: Setup keys for mongodb community edition
         shell: apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
@@ -32,7 +34,7 @@
             - nodejs
 
     -   name: Download pip
-        get_url: 
+        get_url:
             url: https://bootstrap.pypa.io/get-pip.py
             dest: ~/
 
@@ -57,9 +59,9 @@
 
     -   name: Setup mongodb user
         mongodb_user: "database=admin name={{mongodb_user}} password={{mongodb_password}} roles='root,dbAdmin,readWriteAnyDatabase' state=present"
-        
+
     -   name: Setup database user
-        mongodb_user: 
+        mongodb_user:
             login_user: "{{mongodb_user}}"
             login_password: "{{mongodb_password}}"
             login_database: admin
@@ -72,4 +74,19 @@
 
     -   name: Mongo url
         shell: 'echo "export MONGODB_URI=mongodb://{{mongodb_user}}:{{mongodb_password}}@127.0.0.1:27017/{{mongodb_database}}" >> ~/.bashrc'
+
+    -   name: Mongo host env
+        shell: 'echo "export MONGODB_HOST={{mongodb_host}}" >> ~/.bashrc'
+
+    -   name: Mongo port env
+        shell: 'echo "export MONGODB_PORT={{mongodb_port}}" >> ~/.bashrc'
+
+    -   name: Mongo user env
+        shell: 'echo "export MONGODB_USER={{mongodb_user}}" >> ~/.bashrc'
+
+    -   name: Mongo pass env
+        shell: 'echo "export MONGODB_PASS={{mongodb_password}}" >> ~/.bashrc'
+
+    -   name: Mongo db env
+        shell: 'echo "export MONGODB_DB={{mongodb_database}}" >> ~/.bashrc'
 ...
