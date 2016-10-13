@@ -7,6 +7,13 @@ var ObjectID = mongodb.ObjectID;
 
 var ENTRIES_COLLECTION = "entries";
 
+/*process.env.MONGODB_DB = "heroku_ks710m6p";
+process.env.MONGODB_HOST = "ds033066.mlab.com";
+process.env.MONGODB_PASS = "idbnhn0k4n9rr7r5ogk4gpv9tf";
+process.env.MONGODB_PORT = "33066";
+process.env.MONGODB_URI = "mongodb://heroku_ks710m6p:idbnhn0k4n9rr7r5ogk4gpv9tf@ds033066.mlab.com:33066/heroku_ks710m6p";
+process.env.MONGODB_USER = "heroku_ks710m6p";*/
+
 var mmConfig = {
   host: process.env.MONGODB_HOST,
   port: process.env.MONGODB_PORT,
@@ -22,7 +29,7 @@ var mmDir = 'migrations';
 var app = express();
 var migrator = new mm.Migrator(mmConfig);
 
-migrator.runFromDir(mmDir, function(err, result) {
+migrator.runFromDir(mmDir, function (err, result) {
   if (err) {
     console.error(err, result);
     process.exit(1);
@@ -64,9 +71,9 @@ migrator.runFromDir(mmDir, function(err, result) {
   }
 
   /*  "/entries"
-  *    GET: finds all entries
-  *    POST: creates a new entry
-  */
+   *    GET: finds all entries
+   *    POST: creates a new entry
+   */
 
   app.get("/entries", function (req, res) {
     db.collection(ENTRIES_COLLECTION).find({}).toArray(function (err, docs) {
