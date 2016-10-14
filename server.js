@@ -7,15 +7,6 @@ var ObjectID = mongodb.ObjectID;
 
 var ENTRIES_COLLECTION = "entries";
 
-var STATIC_FILES = "/public/" + process.env.VERSION;
-
-/*process.env.MONGODB_DB = "heroku_ks710m6p";
-process.env.MONGODB_HOST = "ds033066.mlab.com";
-process.env.MONGODB_PASS = "idbnhn0k4n9rr7r5ogk4gpv9tf";
-process.env.MONGODB_PORT = "33066";
-process.env.MONGODB_URI = "mongodb://heroku_ks710m6p:idbnhn0k4n9rr7r5ogk4gpv9tf@ds033066.mlab.com:33066/heroku_ks710m6p";
-process.env.MONGODB_USER = "heroku_ks710m6p";*/
-
 var mmConfig = {
 	host: process.env.MONGODB_HOST,
 	port: process.env.MONGODB_PORT,
@@ -38,7 +29,7 @@ migrator.runFromDir(mmDir, function (err, result) {
 		return;
 	}
 
-	app.use(express.static(__dirname + STATIC_FILES));
+	app.use(express.static(__dirname + "/public"));
 	app.use(bodyParser.json());
 
 	// Create a database variable outside of the database connection callback to reuse the connection pool in your app.
@@ -91,8 +82,8 @@ migrator.runFromDir(mmDir, function (err, result) {
 		var newEntry = req.body;
 		newEntry.createDate = new Date();
 
-		if (!req.body.fullName) {
-			handleError(res, "Invalid user input", "Must provide a name.", 400);
+		if (!req.body.firstName || !req.body.lastName) {
+			handleError(res, "Invalid user input", "Missing required body property", 400);
 		}
 
 		db.collection(ENTRIES_COLLECTION).insertOne(newEntry, function (err, doc) {
