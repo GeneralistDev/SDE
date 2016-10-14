@@ -7,7 +7,7 @@ var ObjectID = mongodb.ObjectID;
 
 var ENTRIES_COLLECTION = "entries";
 
-var STATIC_FILES = "/public/v1";
+var STATIC_FILES = "/public/" + process.env.VERSION;
 
 /*process.env.MONGODB_DB = "heroku_ks710m6p";
 process.env.MONGODB_HOST = "ds033066.mlab.com";
