@@ -59,7 +59,7 @@ migrator.runFromDir(mmDir, function (err, result) {
 				doc.lastName = "";
 
 				// Remove old field
-				delete doc.fullName;
+				// delete doc.fullName;
 
 				// Save the updated document
 				db.collection(ENTRIES_COLLECTION).save(doc);
