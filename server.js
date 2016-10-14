@@ -17,6 +17,7 @@ var mmConfig = {
 	poolSize: 5
 }
 
+
 var mmDir = 'migrations';
 
 var app = express();
