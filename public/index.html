@@ -41,9 +41,14 @@
 
 				<button class="btn btn-primary" ng-click="createEntry()">Submit</button>
 
-				<p ng-show="dob">
-					You are {{today | amDifference : dob : 'days'}} days old.
-				</p>
+				<div ng-show="dob">
+					<p>
+						You are {{today | amDifference : dob : 'days'}} earth days old.
+					</p>
+					<p>
+						Your are {{ martianDays }} martian days old.
+					</p>
+				</div>
 
 			</div>
 
