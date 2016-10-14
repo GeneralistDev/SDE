@@ -20,8 +20,15 @@
 
 				<div class="form-group">
 					<label>
-						Full name
-						<input ng-model="fullName" type="text" class="form-control" />
+						First name
+						<input ng-model="firstName" type="text" class="form-control" />
+					</label>
+				</div>
+
+				<div class="form-group">
+					<label>
+						Last name
+						<input ng-model="lastName" type="text" class="form-control" />
 					</label>
 				</div>
 
@@ -46,14 +53,16 @@
 				<table class="table">
 					<thead>
 						<th>Timestamp</th>
-						<th>Full Name</th>
+						<th>First Name</th>
+						<th>Last Name</th>
 						<th>DOB</th>
 						<th>Days Alive</th>
 					</thead>
 					<tbody>
 						<tr ng-repeat="entry in entries track by $index">
 							<td ng-bind="entry.createDate | amDateFormat : 'ddd, MMM Do YYYY, h:mm:ss a'"></td>
-							<td ng-bind="entry.fullName"></td>
+							<td ng-bind="entry.firstName"></td>
+							<td ng-bind="entry.lastName"></td>
 							<td ng-bind="entry.dob | amDateFormat : 'ddd, MMM Do YYYY'"></td>
 							<td ng-bind="today | amDifference : entry.dob : 'days'"></td>
 						</tr>

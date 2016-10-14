@@ -82,8 +82,8 @@ migrator.runFromDir(mmDir, function (err, result) {
 		var newEntry = req.body;
 		newEntry.createDate = new Date();
 
-		if (!req.body.fullName) {
-			handleError(res, "Invalid user input", "Must provide a name.", 400);
+		if (!req.body.firstName || !req.body.lastName) {
+			handleError(res, "Invalid user input", "Missing required body property", 400);
 		}
 
 		db.collection(ENTRIES_COLLECTION).insertOne(newEntry, function (err, doc) {

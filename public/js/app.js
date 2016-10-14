@@ -13,7 +13,8 @@ app.service("Entries", function ($http) {
 // Controller
 app.controller("appController", ['$scope', '$log', 'Entries', function ($scope, $log, Entries) {
 	$scope.today = moment.utc();
-	$scope.fullName = null;
+	$scope.firstName = null;
+	$scope.lastName = null;
 	$scope.dob = null;
 	$scope.entries = [];
 
@@ -33,7 +34,8 @@ app.controller("appController", ['$scope', '$log', 'Entries', function ($scope, 
 			$scope.dob.getDate()
 			]);
 		var entry = {
-			fullName: $scope.fullName,
+			firstName: $scope.firstName,
+			lastName: $scope.lastName,
 			dob: utcDOB
 		};
 
