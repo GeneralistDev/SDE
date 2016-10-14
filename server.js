@@ -46,6 +46,25 @@ migrator.runFromDir(mmDir, function (err, result) {
 		db = database;
 		console.log("Database connection ready");
 
+		// Update the schema
+		console.log("Updating schemas");
+		db.mycollection.find({
+			firstname: {
+				$exists: false
+			}
+		}).forEach(
+			function (doc) {
+				doc.firstName = doc.fullName;
+				doc.lastName = "";
+
+				// Remove old property
+				delete doc.fullName;
+
+				// Save the updated document
+				db.mycollection.save(doc);
+			}
+		);
+
 		// Initialize the app.
 		var server = app.listen(process.env.PORT || 8080, function () {
 			var port = server.address().port;
