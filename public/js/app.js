@@ -20,15 +20,17 @@ app.controller("appController", ['$scope', '$log', 'Entries', function ($scope, 
 	$scope.entries = [];
 
 	$scope.$watch('dob', function (change) {
-		var utcDOB = moment.utc([
-			$scope.dob.getFullYear(),
-			$scope.dob.getMonth(),
-			$scope.dob.getDate()
-			]);
+		if ($scope.dob) {
+			var utcDOB = moment.utc([
+				$scope.dob.getFullYear(),
+				$scope.dob.getMonth(),
+				$scope.dob.getDate()
+				]);
 
-		var diffInDays = $scope.today.diff(utcDOB, 'days');
+			var diffInDays = $scope.today.diff(utcDOB, 'days');
 
-		$scope.martianDays = Math.round(diffInDays * 1.028551396734178);
+			$scope.martianDays = Math.round(diffInDays * 1.028551396734178);
+		}
 	});
 
 	$scope.getEntries = function () {
