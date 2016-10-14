@@ -49,17 +49,14 @@ migrator.runFromDir(mmDir, function (err, result) {
 		// Update the schema
 		console.log("Updating schemas");
 		db.collection(ENTRIES_COLLECTION).find({
-			firstname: {
+			firstName: {
 				$exists: false
 			}
 		}).forEach(
 			function (doc) {
 				// Add new fields
-				doc.firstName = doc.fullName;
+				doc.firstName = doc.fullName || "";
 				doc.lastName = "";
-
-				// Remove old field
-				// delete doc.fullName;
 
 				// Save the updated document
 				db.collection(ENTRIES_COLLECTION).save(doc);
