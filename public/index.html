@@ -62,7 +62,8 @@
 						<th>First Name</th>
 						<th>Last Name</th>
 						<th>DOB</th>
-						<th>Days Alive</th>
+						<th>Earth Days Alive</th>
+						<th>Martian Days Alive</th>
 					</thead>
 					<tbody>
 						<tr ng-repeat="entry in entries track by $index">
@@ -71,6 +72,7 @@
 							<td ng-bind="entry.lastName"></td>
 							<td ng-bind="entry.dob | amDateFormat : 'ddd, MMM Do YYYY'"></td>
 							<td ng-bind="today | amDifference : entry.dob : 'days'"></td>
+							<td ng-bind="entry.martianDays"></td>
 						</tr>
 					</tbody>
 				</table>
