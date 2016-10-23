@@ -11,7 +11,7 @@ class Migrator {
     this.migrationsPath = migrationsPath;
   }
 
-  migrate(version) {
+  migrate() {
     try {
       console.log(this.migrationsPath);
       var migrations = require(path.join(this.migrationsPath, 'index.js'));
